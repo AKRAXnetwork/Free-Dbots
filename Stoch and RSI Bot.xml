@@ -8,40 +8,60 @@
     <variable type="" id="lzx0~Gt[).=D3HH-:@Hq">STOCH-30</variable>
     <variable type="" id="^Jm)?(EFDhSb/ZPPiU8@">STOCH-70</variable>
   </variables>
-  <block type="trade" id="73vWdDagX-YhN)CtN.3D" x="320" y="-314">
-    <field name="MARKET_LIST">volidx</field>
-    <field name="SUBMARKET_LIST">random_index</field>
-    <field name="SYMBOL_LIST">R_100</field>
-    <field name="TRADETYPECAT_LIST">callput</field>
-    <field name="TRADETYPE_LIST">risefall</field>
+  <block type="trade defination_markert" id="trade_parameters" x="10" y="10">
+    <field name="MARKET">synthetic_index</field>
+    <field name="SUBMARKET_LIST">volatility_indices</field>
+    <field name="CONDITION">CALL</field>
+    <field name="DURATIONTYPE">ticks</field>
+    <field name="DURATION">5</field>
+    <field name="SYMBOL_LIST">R_25_1HZ</field>
+    <field name="BARRIER_OFFSET">+2</field>
+    <field name="CURRENCY">USD</field>
+    <field name="AMOUNT">1</field>
+    <field name="BASIS">stake</field>
+    <field name="TYPE_LIST">CALLPUT</field>
+    <field name="TRADETYPE_LIST">RISEFALL</field>
+    
     <field name="TYPE_LIST">both</field>
     <field name="CANDLEINTERVAL_LIST">60</field>
     <field name="TIME_MACHINE_ENABLED">FALSE</field>
     <field name="RESTARTONERROR">TRUE</field>
     <statement name="INITIALIZATION">
-      <block type="variables_set" id="XDMYoip}{3uMJ$~,Wa(K">
-        <field name="VAR" id=";$ZQf`P.{Nfj2%cf$U~+" variabletype="">Max Loss Amount</field>
-        <value name="VALUE">
-          <block type="math_number" id="P!2=P_+S,MKLQTjA]xg(">
-            <field name="NUM">50</field>
-          </block>
-        </value>
-        <next>
-          <block type="variables_set" id="dqduY+F]dYVC%/;)_QyX">
-            <field name="VAR" id="pt@?n}1RFe6_3h7^k:LX" variabletype="">Expected Profit</field>
-            <value name="VALUE">
-              <block type="math_number" id="pGL%0jCRlD;R_i-Q:?jz">
-                <field name="NUM">10</field>
-              </block>
+        </block>
+        <block type="purchase_conditions" id="purchase_conditions" x=20" y="120"
+            <vaue name="CONDITION">
+          <block type="logic_compare" id="macd_logic">
+            <field name="OP">GT</field>
+            <value name="A">
+              <block type="indicxator_macd" id="macd_vail_block/">
+              
             </value>
-            <next>
-              <block type="variables_set" id="cG;6qVzC4dU[J9h%wYdK">
-                <field name="VAR" id="[:*sc!{S6gRB/,L5Q9?)" variabletype="">Win Amount</field>
-                <value name="VALUE">
-                  <block type="math_number" id="?UMlJ9?s?=7*h-CIL?Hv">
-                    <field name="NUM">0.4</field>
+            <value name="B">
+              <block type="math_number" id="macd_threshold/">
+                    <field name="NUM">text="0"/>
                   </block>
                 </value>
+              </block>
+            </value>
+          </block>
+        <block type="after_purchase" id="restart_conditions" x="20" y="220">
+          <value name="STATEMENT">
+            <block type="logic_condition" id="if_loss_block">
+              <field name="CONDITION">is_loss</field>
+                <statement name="DO">
+                 <block type="math_change" id="multiply_stake">
+                  <field name="VAR">stake</field>
+                   <value name="DELTA">
+                    <block type="math_number" id="multiply_value">
+                  <field name="NUM" text="2"/>
+                </block>
+              </value>
+            </block>
+          </statement>
+        </block>
+      </value>
+    </block>
+</xml>
                 <next>
                   <block type="variables_set" id="(GqO!$8|aP4T+(5lW(^E">
                     <field name="VAR" id="1i4q,zqdJs--)bl5UdlM" variabletype="">Initial Amount</field>
