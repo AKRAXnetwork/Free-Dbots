@@ -1,0 +1,32 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <variables>
+    <variable id="tradeCount">tradeCount</variable>
+  </variables>
+  <block type="trade_definition_market" id="market" x="10" y="10">
+    <field name="MARKET">synthetic_index</field>
+    <field name="SUBMARKET">volatility_indices</field>
+    <field name="SYMBOL">R_25_1HZ</field>
+    <next>
+      <block type="trade_definition_tradeoptions" id="tradeOptions">
+        <field name="CONDITION">CALL</field>
+        <field name="DURATIONTYPE">t</field>
+        <field name="DURATION">1</field>
+        <field name="BARRIER1">+2</field>
+        <field name="CURRENCY">USD</field>
+        <field name="AMOUNT">1</field>
+        <next>
+          <block type="trade_definition_strategy" id="strategy">
+            <statement name="STRATEGY">
+              <block type="trade_purchase" id="purchase">
+                <field name="CONDITION">CALL</field>
+              </block>
+            </statement>
+            <next>
+              <block type="trade_definition_restart" id="restart" />
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>
